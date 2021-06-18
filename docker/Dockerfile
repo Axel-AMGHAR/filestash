@@ -10,7 +10,9 @@ RUN apt-get update > /dev/null && \
     apt-get install -y libglib2.0-0 curl gnupg > /dev/null && \
     echo $PUBLIC_KEY | gpg --import && \
     cd /tmp/ && \
-    curl --resolve downloads.filestash.app -s https://downloads.filestash.app/latest/filestash_`uname -s`-`uname -m`.tar.gpg | gpg --decrypt | tar xf - && \
+
+    git clone https://github.com/Axel-AMGHAR/filestash.git
+
     mv filestash /app/ && \
     apt-get purge -y --auto-remove gnupg && \
     #################
@@ -55,7 +57,7 @@ RUN apt-get update > /dev/null && \
 USER filestash
 RUN timeout 1 /app/filestash | grep -q start
 
-EXPOSE 8334
+EXPOSE 8001
 VOLUME ["/app/data/state/"]
 WORKDIR "/app"
 CMD ["/app/filestash"]
